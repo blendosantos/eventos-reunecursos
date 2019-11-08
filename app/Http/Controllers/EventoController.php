@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class EventoController extends Controller
 {
     public function index(){
-        $eventos = Evento::with('planos')->where('status', '<>', 0)->get();
+        $eventos = Evento::with('planos')->with('banner')->where('status', '<>', 0)->get();
         //return $eventos[0]->planos[0]->valor;
         return view("events.index", compact('eventos'));
     }

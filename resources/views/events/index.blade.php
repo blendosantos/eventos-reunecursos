@@ -143,7 +143,7 @@
 
                                                     <div class="column active-responsive no-sticky item-curso"><div class="column-inner" style="padding-left: 0px; padding-right: 0px;"></p>
                                                         <div class="box-course">
-                                                            <div class="thumb-course"><a href="/{{$evento->slug}}"><img src="http://www.reunecursos.com.br/novosite/wp-content/uploads/2015/12/Educa%C3%A7%C3%A3o-Inclusiva.jpg"></a></div>
+                                                        <div class="thumb-course"><a href="/{{$evento->slug}}"><img src="{{$evento->banner->path}}"></a></div>
                                                         <div class="title-course">{{$evento->titulo}}</div>
                                                         <div class="clock-course">{{$evento->carga_horaria}}</div>
                                                             @if($evento->planos[0]->valor != 0)

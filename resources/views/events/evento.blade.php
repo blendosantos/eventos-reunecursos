@@ -319,29 +319,55 @@
 									<!-- / single price item -->
 
                                     <!-- single price item -->
+                                    @if(count($evento->planos) == 1)
                                     <div class="col-md-4">&nbsp;</div>
 									<div class="col-md-4">
-										<div class="mu-single-price mu-popular-price">
-											<!--<span class="mu-price-tag">Popular</span> -->
-											<div class="mu-single-price-head">
-												<span class="mu-currency">R$</span>
-												<span class="mu-rate">0</span>
-												<span class="mu-time">/Todos os dias</span>
-											</div>
-											<h3 class="mu-price-title">UNÍCO</h3>
-											<ul>
-												<li>6 VAGAS</li>
-												<!--<<li>Access to all sessions</li>
-												<li>Free Breakfast</li> -->
-                                            </ul>
-                                            @if($evento->status == 1)
-                                            <a class="mu-register-btn" href="#mu-register"> Inscrever-se Agora</a>
-                                            @else
-                                            <a class="mu-register-btn" href="#" style="background: #a04747;border: 1px solid #a04747;"> ENCERRADO</a>
-                                            @endif
-										</div>
-                                    </div>
+                                            <div class="mu-single-price mu-popular-price">
+                                                <!--<span class="mu-price-tag">Popular</span> -->
+                                                <div class="mu-single-price-head">
+                                                    <span class="mu-currency">R$</span>
+                                                    <span class="mu-rate">{{$evento->planos[0]->valor}}</span>
+                                                    <span class="mu-time">{{$evento->planos[0]->tempo}}</span>
+                                                </div>
+                                                <h3 class="mu-price-title">{{$evento->planos[0]->titulo}}</h3>
+                                                <ul>
+                                                    <li>{{$evento->planos[0]->item1}}</li>
+                                                    <li>{{$evento->planos[0]->item2}}</li>
+                                                    <li>{{$evento->planos[0]->item3}}</li>
+                                                </ul>
+                                                @if($evento->status == 1)
+                                                <a class="mu-register-btn" href="#mu-register"> Inscrever-se Agora</a>
+                                                @else
+                                                <a class="mu-register-btn" href="#" style="background: #a04747;border: 1px solid #a04747;"> ENCERRADO</a>
+                                                @endif
+                                            </div>
+                                        </div>
                                     <div class="col-md-4">&nbsp;</div>
+                                    @else
+                                    @foreach ($evento->planos as $item)
+                                    <div class="col-md-4">
+                                            <div class="mu-single-price mu-popular-price">
+                                                <!--<span class="mu-price-tag">Popular</span> -->
+                                                <div class="mu-single-price-head">
+                                                    <span class="mu-currency">R$</span>
+                                                    <span class="mu-rate">{{$item->valor}}</span>
+                                                    <span class="mu-time">{{$item->tempo}}</span>
+                                                </div>
+                                                <h3 class="mu-price-title">{{$item->titulo}}</h3>
+                                                <ul>
+                                                    <li>{{$item->item1}}</li>
+                                                    <li>{{$item->item2}}</li>
+                                                    <li>{{$item->item3}}</li>
+                                                </ul>
+                                                @if($evento->status == 1)
+                                                <a class="mu-register-btn" href="#mu-register"> Inscrever-se Agora</a>
+                                                @else
+                                                <a class="mu-register-btn" href="#" style="background: #a04747;border: 1px solid #a04747;"> ENCERRADO</a>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                    @endif
 									<!-- / single price item -->
 
 									<!-- single price item -->
@@ -393,13 +419,13 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<input type="text" class="form-control" placeholder="Nome Complento" id="nome" name="nome" required="">
+												<input type="text" class="form-control" placeholder="Nome Complento *" id="nome" name="nome" required="">
 											</div>
 										</div>
 
 										<div class="col-md-6">
 											<div class="form-group">
-												<input type="text" class="form-control" placeholder="CPF" id="cpf" name="cpf" required="">
+												<input type="text" class="form-control" placeholder="CPF *" id="cpf" name="cpf" required="">
 											</div>
 										</div>
                                     </div>
@@ -407,7 +433,7 @@
                                     <div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<input type="email" class="form-control" placeholder="Email" id="email" name="email" required="">
+												<input type="email" class="form-control" placeholder="Email *" id="email" name="email" required="">
 											</div>
 										</div>
                                     </div>
@@ -429,7 +455,12 @@
                                     <div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<input type="text" class="form-control" placeholder="Grau de instrução" id="grau_instrucao" name="grau_instrucao">
+                                                <select class="form-control" name="grau_instrucao" id="grau_instrucao">
+                                                        <option value="0">ENSINO MÉDIO</option>
+                                                        <option value="1">SUPERIOR COMPLETO</option>
+                                                        <option value="2">PÓS-GRADUACAO</option>
+                                                        <option value="3">MESTRADO</option>
+                                                    </select>
 											</div>
 										</div>
 
@@ -450,7 +481,9 @@
 
 										<div class="form-group">
 											<select class="form-control" name="plano" id="plano">
-												<option value="0">UNÍCO (R$ 0)</option>
+                                                @foreach($evento->planos as $item)
+                                                    <option value="{{$item->id}}">{{$item->titulo . " (R$ " . $item->valor. ")"}}</option>
+                                                @endforeach
 											</select>
 										</div>
 										</div>
