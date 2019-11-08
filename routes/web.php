@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'EventoController@index');
+
+Route::get('/{slug}', 'EventoController@evento');
 
 Route::get('/pagar', 'PagamentoParticipanteController@efetuarPagamento');
 
