@@ -23,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        setlocale(LC_TIME, 'pt-br');
+        setlocale(LC_ALL, 'portuguese');
+        date_default_timezone_set('America/Bahia');
     }
 }

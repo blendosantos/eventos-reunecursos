@@ -143,14 +143,11 @@
 
                                                     <div class="column active-responsive no-sticky item-curso"><div class="column-inner" style="padding-left: 0px; padding-right: 0px;"></p>
                                                         <div class="box-course">
-                                                        <div class="thumb-course"><a href="/{{$evento->slug}}"><img src="{{$evento->banner->path}}"></a></div>
+                                                        <div class="thumb-course"><a href="/{{$evento->slug}}"><img src="{{$evento->destaque->path}}"></a></div>
                                                         <div class="title-course">{{$evento->titulo}}</div>
                                                         <div class="clock-course">{{$evento->carga_horaria}}</div>
                                                             @if($evento->planos[0]->valor != 0)
-                                                            <div class="price">
-                                                                10x de <span class="price-parc">R$ 15,21 </span><br />
-                                                            ou {{$evento->planos[0]->valor}} á vista
-                                                            </div>
+                                                            <div class="price"><span class="price-parc">R$ {{$evento->planos[0]->valor}} </span></div>
                                                             @else
                                                             <div class="price"><span class="price-parc">R$ 0 </span></div>
                                                             @endif
@@ -388,7 +385,12 @@
 														background: linear-gradient(to bottom,  rgba(125,185,232,0) 0%,rgba(0,0,0,1) 100%);
 														filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007db9e8', endColorstr='#000000',GradientType=0 );
 
-													}
+                                                    }
+
+                                                    #header.header-layout-logo-top .td .header-ads, #header.header-layout-logo-mid .td .header-ads {
+    max-width: 620px;
+    float: right;
+}
 
 												</style>
 

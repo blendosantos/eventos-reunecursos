@@ -573,8 +573,16 @@ button:focus {
 .mu-schedule-area {
 	display: inline;
 	float: left;
-	padding: 100px 0;
+	padding: 50px 0;
 	width: 100%;
+}
+
+section#mu-metodologia {
+    background: #f8f8f8;
+}
+
+.div-metodologia {
+    margin-bottom: 50px;
 }
 
 .mu-schedule-content-area  {

@@ -15,7 +15,7 @@ Route::get('/', 'EventoController@index');
 
 Route::get('/{slug}', 'EventoController@evento');
 
-Route::get('/pagar', 'PagamentoParticipanteController@efetuarPagamento');
+Route::get('/pagseguro/pagar', 'PagamentoParticipanteController@efetuarPagamento');
 
 Route::post('/pagseguro/notification', [
     'uses' => '\laravel\pagseguro\Platform\Laravel5\NotificationController@notification',

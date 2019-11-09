@@ -39,7 +39,7 @@
   <body>
 
   	<!-- Start Header -->
-	<header id="mu-hero" class="" role="banner" style="background-image: url(assets/images/head-featured-bg.jpg);">
+	<header id="mu-hero" class="" role="banner" style="background-image: url({{$evento->idBanner == "" ? 'assets/images/15773.jpg' : $evento->banner->path}});">
 		<!-- Start menu  -->
 		<nav class="navbar navbar-fixed-top navbar-default mu-navbar">
 		  	<div class="container">
@@ -91,7 +91,20 @@
 
                             <h1>{{$evento->titulo}}</h1>
 							<h2>{{$evento->sub_titulo}}</h2>
-							<p class="mu-event-date-line">09 de Novembro, 2019. Salvador/BA, BR</p>
+							<p class="mu-event-date-line">
+                                <?php $dtInical = strtotime($evento->dt_inicial); ?>
+                                <?php
+                                function convert_date($m){
+                                    $meses = array("Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro");
+                                    return $meses[$m];
+                                };
+                                ?>
+                                {{date("d", $dtInical)}}
+                                @if($evento->dt_final != "")
+                                {{" - " . date("d", strtotime($evento->dt_final))}}
+                                @endif
+                                {{" de " . convert_date(date("m", $dtInical)) . ", " . date("Y", $dtInical) }}
+                            </p>
 
 							<div class="mu-event-counter-area">
 								<div id="mu-event-counter">
@@ -121,7 +134,7 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="mu-about-left">
-										<img class="" src="assets/images/about.jpg" alt="Men Speaker">
+                                    <img class="" src="{{$evento->destaque->path}}" alt="Men Speaker">
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -137,10 +150,44 @@
 				</div>
 			</div>
 		</section>
-		<!-- End About -->
+        <!-- End About -->
+
+        <!-- Start Metodologia -->
+		<section id="mu-metodologia">
+                <div class="container">
+                    <div class="row">
+                        <div class="colo-md-12">
+                            <div class="mu-schedule-area">
+                                <div class="mu-title-area">
+                                    <h2 class="mu-title">Metodologia Reúne</h2>
+                                </div>
+                            </div>
+
+                            <div class="div-metodologia">
+                                <ul class="ul-metodologia">
+                                    <li>
+                                        <p>Método de aprendizagem  dinâmico e interativos.</p>
+                                    </li>
+                                    <li>
+                                            <p>Turmas reduzidas, possibilitando  o contado direto entre o facilitador e os participantes.</p>
+                                    </li>
+                                    <li>
+                                            <p> Utilização de recursos de áudio e vídeo de ultima geração.</p>
+                                    </li>
+                                    <li>
+                                            <p> Coach personalizado, fomentando a construção do conhecimento em todas as etapas do processo.</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End Metodologia -->
 
 		<!-- Start Video -->
-		<section id="mu-video">
+		<section id="mu-video" style="background-image: url(/assets/images/1107.jpg)">
 			<div class="mu-video-overlay">
 				<div class="container">
 					<div class="row">
@@ -181,27 +228,29 @@
 							<div class="mu-schedule-content-area">
 								<!-- Nav tabs -->
 								<ul class="nav nav-tabs mu-schedule-menu" role="tablist">
-								    <li role="presentation" class="active"><a href="#first-day" aria-controls="first-day" role="tab" data-toggle="tab">09 Nov</a></li>
+								    <li role="presentation" class="active">
+                                        <a href="#first-day" aria-controls="first-day" role="tab" data-toggle="tab">
+                                            {{date("d/M", strtotime($evento->dt_inicial))}}
+                                        </a>
+                                    </li>
 								</ul>
 
 								<!-- Tab panes -->
 								<div class="tab-content mu-schedule-content">
 								    <div role="tabpanel" class="tab-pane fade mu-event-timeline in active" id="first-day">
 								    	<ul>
+                                            @foreach($evento->programacao as $item)
 								    		<li>
 								    			<div class="mu-single-event">
-								    				<p class="mu-event-time">13:30 PM</p>
-								    				<h3>Introdução</h3>
+                                                    @if($item->idBanner != "")
+                                                    <img src="{{$item->banner->path}}" alt="event speaker">
+                                                    @endif
+								    				<p class="mu-event-time">{{$item->horario}}</p>
+								    				<h3>{{$item->titulo}}</h3>
+								    				<span>{{$item->sub_titulo}}</span>
 								    			</div>
 								    		</li>
-								    		<li>
-								    			<div class="mu-single-event">
-								    				<img src="assets/images/speaker-1.jpg" alt="event speaker">
-								    				<p class="mu-event-time">14:00 PM</p>
-								    				<h3>Gerenciadores/Padrão de Projeto</h3>
-								    				<span>Slidy e Bloc_pattern</span>
-								    			</div>
-								    		</li>
+                                            @endforeach
 								    	</ul>
 								    </div>
 								</div>
@@ -232,20 +281,22 @@
 
 								<div class="mu-speakers-slider">
 
+                                    @foreach($evento->palestrantes as $item)
 									<!-- Start single speaker -->
 									<div class="mu-single-speakers">
-										<img src="assets/images/speaker-1.jpg" alt="speaker img">
+										<img src="{{$item->palestrante->foto->path}}" alt="speaker img">
 										<div class="mu-single-speakers-info">
-											<h3>Blendo Santos</h3>
-											<p>Systems Analyst, Mobile App Developer</p>
+											<h3>{{$item->palestrante->nome}}</h3>
+											<p>{{$item->palestrante->especificacao}}</p>
 											<ul class="mu-single-speakers-social">
-												<li><a href="https://fb.com/blendomiller"><i class="fa fa-facebook"></i></a></li>
-												<li><a href="https://twitter.com/blendomiller"><i class="fa fa-twitter"></i></a></li>
-												<li><a href="https://www.linkedin.com/in/blendo-santos-5a0250ba"><i class="fa fa-linkedin"></i></a></li>
+												<li><a href="{{$item->palestrante->facebook}}"><i class="fa fa-facebook"></i></a></li>
+												<li><a href="{{$item->palestrante->twitter}}"><i class="fa fa-twitter"></i></a></li>
+												<li><a href="{{$item->palestrante->linkdein}}"><i class="fa fa-linkedin"></i></a></li>
 											</ul>
 										</div>
 									</div>
-									<!-- End single speaker -->
+                                    <!-- End single speaker -->
+                                    @endforeach
 
 								</div>
 							</div>
@@ -265,7 +316,7 @@
 
 					<div class="col-md-6">
 						<div class="mu-venue-map">
-							<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1870.856444750342!2d-38.44840617712791!3d-12.987529394102118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x9f5b7800c77eb974!2sInternacional%20Trade%20Center%20-%20ITC%20Salvador!5e0!3m2!1spt-BR!2sbr!4v1573181057861!5m2!1spt-BR!2sbr" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                        <iframe src="{{$evento->link_geolocalizacao}}" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
 						</div>
 					</div>
 
@@ -297,26 +348,6 @@
 
 							<div class="mu-pricing-conten">
 								<div class="row">
-
-									<!-- single price item -->
-									<!--<div class="col-md-4">
-										<div class="mu-single-price">
-
-											<div class="mu-single-price-head">
-												<span class="mu-currency">$</span>
-												<span class="mu-rate">12</span>
-												<span class="mu-time">/all days</span>
-											</div>
-											<h3 class="mu-price-title">BASIC</h3>
-											<ul>
-												<li>Basic Class Ticket</li>
-												<li>Access to all sessions</li>
-												<li>Free Breakfast</li>
-											</ul>
-											<a class="mu-register-btn" href="#"> Register Now</a>
-										</div>
-									</div> -->
-									<!-- / single price item -->
 
                                     <!-- single price item -->
                                     @if(count($evento->planos) == 1)
@@ -368,26 +399,6 @@
                                         </div>
                                     @endforeach
                                     @endif
-									<!-- / single price item -->
-
-									<!-- single price item -->
-									<!-- <div class="col-md-4">
-										<div class="mu-single-price">
-
-											<div class="mu-single-price-head">
-												<span class="mu-currency">$</span>
-												<span class="mu-rate">45</span>
-												<span class="mu-time">/all days</span>
-											</div>
-											<h3 class="mu-price-title">PREMIUM</h3>
-											<ul>
-												<li>Basic Class Ticket</li>
-												<li>Access to all sessions</li>
-												<li>Free Breakfast</li>
-											</ul>
-											<a class="mu-register-btn" href="#"> Register Now</a>
-										</div>
-									</div> -->
 									<!-- / single price item -->
 
 								</div>

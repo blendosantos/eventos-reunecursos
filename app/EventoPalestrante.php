@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class EventoPalestrante extends Model
 {
     public function palestrante() {
-        return $this->hasOne('App\Palestrante', 'id', 'idPalestrante');
+        return $this->hasOne('App\Palestrante', 'id', 'idPalestrante')->with('foto');
     }
 }
