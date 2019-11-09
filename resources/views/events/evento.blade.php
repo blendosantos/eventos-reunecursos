@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Reúne Cursos : Home</title>
+    <title>Reúne Cursos : {{$evento->titulo}}</title>
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/icon" href="assets/images/favicon.ico"/>
     <!-- Font Awesome -->
@@ -284,7 +284,7 @@
                                     @foreach($evento->palestrantes as $item)
 									<!-- Start single speaker -->
 									<div class="mu-single-speakers">
-										<img src="{{$item->palestrante->foto->path}}" alt="speaker img">
+										<img src="{{$item->palestrante->foto != '' ? $item->palestrante->foto->path : '/assets/images/speaker-1.jpg'}}" alt="speaker img">
 										<div class="mu-single-speakers-info">
 											<h3>{{$item->palestrante->nome}}</h3>
 											<p>{{$item->palestrante->especificacao}}</p>
@@ -343,7 +343,8 @@
 
 							<div class="mu-title-area">
 								<h2 class="mu-title">Valor do Investimento</h2>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis unde, ut sapiente et voluptatum facilis consectetur incidunt provident asperiores at necessitatibus nulla sequi voluptas libero quasi explicabo veritatis minima porro.</p>
+								<p>O investimento para participação no curso poderá ser dividido em até 4x sem juros
+                                    e o pagamento é assegurado pelo PagSeguro no qual fornece várias formas de efetuar o pagamento além do cartão de crédito.</p>
 							</div>
 
 							<div class="mu-pricing-conten">
@@ -417,6 +418,13 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
+
+                        @if (session('error'))
+                            <div class="alert alert-danger msg-error">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
 						<div class="mu-register-area">
 
 							<div class="mu-title-area">
@@ -425,7 +433,7 @@
 							</div>
 
 							<div class="mu-register-content">
-								<form class="mu-register-form">
+								<form class="mu-register-form" action="">
 
 									<div class="row">
 										<div class="col-md-6">
@@ -466,7 +474,8 @@
                                     <div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
-                                                <select class="form-control" name="grau_instrucao" id="grau_instrucao">
+                                                <select class="form-control" name="grau_instrucao" id="grau_instrucao" required>
+                                                        <option value="">Grau de Instrução*</option>
                                                         <option value="0">ENSINO MÉDIO</option>
                                                         <option value="1">SUPERIOR COMPLETO</option>
                                                         <option value="2">PÓS-GRADUACAO</option>

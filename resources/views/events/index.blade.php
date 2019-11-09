@@ -137,6 +137,11 @@
 										</div><!-- end post-header -->
 										<div class="post-body entry-content content-template wide-right" id="post-body-2014" itemprop="articleBody">
 
+                                            @if (session('error'))
+                                                <div class="alert alert-danger msg-error">
+                                                    {{ session('error') }}
+                                                </div>
+                                            @endif
 
 											<div class="post-body-inner">
                                                 <?php foreach($eventos as $evento) { ?>
@@ -145,6 +150,7 @@
                                                         <div class="box-course">
                                                         <div class="thumb-course"><a href="/{{$evento->slug}}"><img src="{{$evento->destaque->path}}"></a></div>
                                                         <div class="title-course">{{$evento->titulo}}</div>
+                                                        <div class="sub_title-course">{{$evento->sub_titulo}}</div>
                                                         <div class="clock-course">{{$evento->carga_horaria}}</div>
                                                             @if($evento->planos[0]->valor != 0)
                                                             <div class="price"><span class="price-parc">R$ {{$evento->planos[0]->valor}} </span></div>
@@ -169,7 +175,15 @@
 													</div><!-- end post-hentry -->
 
 
-													<style type="text/css">/*  Gallery Videos */
+                                                    <style type="text/css">/*  Gallery Videos */
+                                                    .msg-error {
+                                                        margin-bottom: -65px;
+                                                        margin-top: 10px;
+                                                    }
+                                                    .sub_title-course {
+                                                        margin-top: -20px;
+                                                        margin-bottom: 30px;
+                                                    }
 													div.emd-container a {
 														font-family: Oswald, serif;
 													}
@@ -295,7 +309,7 @@
 														box-shadow: 0px 2px 19px -6px rgba(0,0,0,0.60);
 													}
 													.thumb-course {
-														max-height: 150px;
+														max-height: 250px;
 														overflow: hidden;
 													}
 													.title-course {

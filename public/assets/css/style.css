@@ -993,8 +993,13 @@ section#mu-metodologia {
 .mu-register-area {
 	display: inline;
 	float: left;
-	padding: 150px 0;
+	padding: 100px 0;
 	width: 100%;
+}
+
+.msg-error {
+    margin-bottom: -65px;
+    margin-top: 10px;
 }
 
 .mu-register-area .mu-title,
