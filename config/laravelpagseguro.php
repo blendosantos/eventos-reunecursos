@@ -27,7 +27,7 @@ return [
             'route-name' => 'pagseguro.redirect', // Criar uma rota com este nome
         ],
         'notification' => [
-            'callback' => ['NotificacaoPSController', 'notificacao'], // Callable callback to Notification function (notificationInfo) : void {}
+            'callback' => ['App\Http\Controllers\NotificacaoPSController', 'notificationInfo'], // Callable callback to Notification function (notificationInfo) : void {}
             'credential' => 'default', // Callable resolve credential function (notificationCode) : Credentials {}
             'route-name' => 'pagseguro.notification', // Criar uma rota com este nome
         ],

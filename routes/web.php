@@ -17,10 +17,9 @@ Route::get('/{slug}', 'EventoController@evento');
 
 Route::get('/pagseguro/pagar/{idParticipante}', 'PagamentoParticipanteController@efetuarPagamento');
 
-Route::post('/pagseguro/notification', [
-    'uses' => '\laravel\pagseguro\Platform\Laravel5\NotificationController@notification',
-    'as' => 'pagseguro.notification',
-]);
+Route::post('/cadastro/participante/{idEvento}', 'EventoController@addParticipante');
+
+Route::post('/contato/send/{idEvento}', 'ContatoController@sendContato');
 
 Route::get('/pagseguro/redirect', [
     'uses' => 'PagamentoParticipanteController@redirect',

@@ -39,7 +39,7 @@
   <body>
 
   	<!-- Start Header -->
-	<header id="mu-hero" class="" role="banner" style="background-image: url({{$evento->idBanner == "" ? 'assets/images/15773.jpg' : $evento->banner->path}});">
+	<header id="mu-hero" class="" role="banner" style="background-image: url({{$evento->idBanner == '' ? 'assets/images/15773.jpg' : $evento->banner->path}});">
 		<!-- Start menu  -->
 		<nav class="navbar navbar-fixed-top navbar-default mu-navbar">
 		  	<div class="container">
@@ -185,6 +185,29 @@
                 </div>
             </section>
             <!-- End Metodologia -->
+
+            @if($evento->publico_alvo != "")
+		<section id="mu-publico-alvo">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="mu-about-area">
+							<!-- Start Feature Content -->
+							<div class="row">
+								<div class="col-md-12">
+									<div class="mu-about-right" style="text-align: center;">
+										<h2>Público Alvo</h2>
+                                        <p>{{ $evento->publico_alvo }}</p>
+									</div>
+								</div>
+							</div>
+							<!-- End Feature Content -->
+						</div>
+					</div>
+				</div>
+			</div>
+        </section>
+        @endif
 
 		<!-- Start Video -->
 		<section id="mu-video" style="background-image: url(/assets/images/1107.jpg)">
@@ -419,6 +442,12 @@
 				<div class="row">
 					<div class="col-md-12">
 
+                        @if (session('sucesso-inscricao'))
+                            <div class="alert alert-success msg-error">
+                                {{ session('sucesso-inscricao') }}
+                            </div>
+                        @endif
+
                         @if (session('error'))
                             <div class="alert alert-danger msg-error">
                                 {{ session('error') }}
@@ -429,12 +458,12 @@
 
 							<div class="mu-title-area">
 								<h2 class="mu-title">Formulário de Inscrição</h2>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis unde, ut sapiente et voluptatum facilis consectetur incidunt provident asperiores at necessitatibus nulla sequi voluptas libero quasi explicabo veritatis minima porro.</p>
+								<p></p>
 							</div>
 
 							<div class="mu-register-content">
-								<form class="mu-register-form" action="">
-
+                                <form class="mu-register-form" action="{{url('/cadastro/participante/').'/'.$evento->id}}" method="POST">
+                                    @csrf
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
@@ -727,6 +756,19 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
+
+                        @if (session('sucesso-email'))
+                            <div class="alert alert-success msg-error">
+                                {{ session('sucesso-email') }}
+                            </div>
+                        @endif
+
+                        @if (session('error-contato'))
+                            <div class="alert alert-danger msg-error">
+                                {{ session('error-contato') }}
+                            </div>
+                        @endif
+
 						<div class="mu-contact-area">
 
 							<div class="mu-title-area">
@@ -740,18 +782,18 @@
 
 								<div class="col-md-12">
 									<div class="mu-contact-form-area">
-										<div id="form-messages"></div>
-											<form id="ajax-contact" method="post" action="mailer.php" class="mu-contact-form">
+                                            <form method="post" action="{{url('/contato/send/').'/'.$evento->id}}" class="mu-contact-form">
+                                            @csrf
 												<div class="form-group">
-													<input type="text" class="form-control" placeholder="Nome Completo" id="name" name="name" required>
+													<input type="text" class="form-control" placeholder="Nome Completo" id="nome" name="nome" required>
 												</div>
 												<div class="form-group">
 													<input type="email" class="form-control" placeholder="Email" id="email" name="email" required>
 												</div>
 												<div class="form-group">
-													<textarea class="form-control" placeholder="Mensagem" id="message" name="message" required></textarea>
+													<textarea class="form-control" placeholder="Mensagem" id="mensagem" name="mensagem" required></textarea>
 												</div>
-												<button type="submit" class="mu-send-msg-btn"><span>SUBMIT</span></button>
+												<button type="submit" class="mu-send-msg-btn"><span>ENVIAR</span></button>
 								            </form>
 										</div>
 									</div>

@@ -1,0 +1,187 @@
+.text-justify{
+    text-align: justify !important;
+}
+.avatar img {
+    height: 100% !important;
+}
+
+.acao-list .icmn-bin:before{
+    color: #c70505;
+}
+
+.acao-list .icmn-pencil:before{
+    color: #2e4da9;
+}
+
+.acao-list .icmn-blocked:before{
+    color: #af4949;
+}
+
+.acao-list .icmn-checkmark:before{
+    color: #037503;
+}
+
+.acao-list .icmn-paperplane:before{
+    color: #037503;
+}
+
+.acao-list{
+    width: 100px !important;
+}
+
+.bg_ln {
+    background: url('../img/bg_ln.gif');
+    background-repeat: repeat-x;
+    background-position: 0 36%;
+    padding-left: 0 !important;
+}
+
+.bg_ln h6{
+    display: table;
+    background: #fff;
+    padding:10px;
+}
+
+.bg_ln_home h6 {
+    background: #eceff4 !important;
+}
+
+.left-menu-link span.menu-top-hidden{
+    font-size: 1.1rem;
+}
+
+.messaging .messaging-search {
+    padding: 0px 0px !important;
+}
+
+.nav-tabs-horizontal{
+    padding-top: 14px !important;
+}
+
+.area-email h3{
+    color: #6a7a84;
+}
+
+.area-email p{
+    text-indent: 2em;
+    text-align: justify;
+}
+
+#caixa_email .panel-sidebar {
+    height: 480px;
+}
+
+.area-anexo{
+    margin-left: 28px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #6a7a84;
+    padding-bottom: 15px;
+}
+
+.area-anexo div{
+    margin-left: 15px;
+}
+
+#caixa_email .tab-content {
+    height: 400px;
+    overflow: auto;
+}
+
+.dropzone{
+    min-height: 200px !important;
+    border: 2px dashed #04638e !important;
+}
+
+.dropzone .dz-message{
+    margin: 3em 0;
+}
+.usuario-ranking .col-lg-2, .usuario-ranking .col-lg-10{
+    padding: 0 !important;
+}
+
+.modal-header .close {
+    margin-top: -30px !important;
+}
+
+.border-direita{
+    border-right: 1px solid #2b2838 !important;
+}
+
+.border-bottom{
+    border-bottom: 1px solid #2b2838 !important;
+}
+
+.background-success {
+    background-color: #1579a6 !important;
+}
+
+.widget-body-inner a{
+    color: #FFF !important;
+}
+
+.widget-seven .counter-icon, .widget-seven .counter-count{
+    color: #FFF;
+}
+
+/*
+    Calendario
+*/
+div.zabuto_calendar {
+    padding: 0;
+    width: 100%;
+    margin: 0px 0px 15px 0px;
+}
+div.zabuto_calendar .table tr.calendar-month-header th {
+    background-color: #2b2838;
+}
+div.zabuto_calendar .table tr.calendar-month-header th span{
+    padding-bottom: 5px;
+}
+div.zabuto_calendar .table tr.calendar-month-header th[colspan="5"] span{
+    margin-top: 5px;
+}
+div.zabuto_calendar .table tr.calendar-dow-header th {
+    background-color: #38354a;
+}
+div.zabuto_calendar .table tr th, div.zabuto_calendar .table tr td {
+    background-color: #dfe4ed;
+}
+div.zabuto_calendar .table tr td div.day{
+    color: #38354a;
+}
+div.zabuto_calendar .badge-today, div.zabuto_calendar div.legend span.badge-today, div.zabuto_calendar .table tr td.event div.day {
+    background-color: #00a2cd;
+    color: #FFFFFF;
+}
+
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.panel-discursiva .list-group-item:last-child{
+    margin-bottom: 5px !important;
+}
+
+.panel-discursiva .list-group-item{
+    border: none;
+    border-top: 1px solid #ddd !important;
+}
+
+.panel-discursiva .panel-heading b{
+    text-align: justify !important;
+    font-size: 1.1rem !important;
+}
+
+.select2-container{
+    z-index: 0 !important;
+}

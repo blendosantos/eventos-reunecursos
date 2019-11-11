@@ -17,10 +17,16 @@ class PagamentoParticipanteController extends Controller
         try {
             $participante = Participante::with('plano')->with('evento')->find($idParticipante);
             $evento = $participante->evento->slug;
+
+            if($participante->plano->valor == 0) {
+                return redirect("/$evento#mu-register")->with('sucesso-inscricao', "Inscrição efetuada com sucesso!");
+            }
+
             $data = [
+                'reference' => $participante->id,
                 'items' => [
                     [
-                        'id' => $participante->id,
+                        'id' => $participante->evento->id,
                         'description' => 'Reúne Cursos - ' . $participante->evento->slug,
                         'quantity' => '1',
                         'amount' => $participante->plano->valor,
@@ -48,7 +54,10 @@ class PagamentoParticipanteController extends Controller
             $credentials = \PagSeguro::credentials()->get();
             $information = $checkout->send($credentials); // Retorna um objeto de laravel\pagseguro\Checkout\Information\Information
             if ($information) {
-                $pagamento = new Pagamento();
+                $pagamento = Pagamento::where('idParticipante', $idParticipante)->first();
+                if(!$pagamento){
+                    $pagamento = new Pagamento();
+                }
                 $pagamento->idParticipante = $idParticipante;
                 $pagamento->token = $information->getCode();
                 $pagamento->created_at = $information->getDate();
