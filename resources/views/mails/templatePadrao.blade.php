@@ -123,7 +123,7 @@
         <div style="max-width: 800px;">
             <div class="row">
                 <div class="col-xl-12">
-                    <img src="{{ url('v2/img/email/topo.png') }}" alt="iPIM" style="width: 100%">
+                    <img src="{{ url('assets/images/reune-cursos-logotipo-1.png') }}" alt="iPIM" style="width: 100%">
                 </div>
             </div>
 
@@ -148,7 +148,7 @@
 
             <div class="row margin-top-50">
                 <div class="col-xl-12 footer">
-                    <img src="{{ url('v2/img/email/footer.png') }}" alt="Reúne" style="width: 100%">
+                    <img src="{{ url('assets/images/reune-cursos-logotipo-1.png') }}" alt="Reúne" style="width: 100%">
                 </div>
                 <div class="col-xl-12 text-justify  margin-top-10">
                     <p>Essa mensagem é enviada automaticamente, por isso, não responda este e-mail.

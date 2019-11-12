@@ -25,3 +25,10 @@ Route::get('/pagseguro/redirect', [
     'uses' => 'PagamentoParticipanteController@redirect',
     'as' => 'pagseguro.redirect',
 ]);
+
+Route::get('/admin/lista', 'EventoController@listaAdmin');
+Route::get('/admin/cadastro', 'EventoController@cadastroAdmin');
+Route::get('/admin/edit/{idEvento}', 'EventoController@editAdmin');
+Route::get('/admin/active/{idEvento}', 'EventoController@active');
+Route::get('/admin/inactive/{idEvento}', 'EventoController@inactive');
+Route::get('/admin/delete/{idEvento}', 'EventoController@delete');

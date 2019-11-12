@@ -16,6 +16,49 @@ class EventoController extends Controller
         return view("events.index", compact('eventos'));
     }
 
+    public function listaAdmin(){
+        $eventos = Evento::with('planos')->with('banner')->orderBy('status', 'asc')->orderBy('dt_inicial', 'asc')->get();
+        //return $eventos;
+        return view("events.lista", compact('eventos'));
+    }
+
+    public function cadastroAdmin(){
+        return view("events.cadastro");
+    }
+
+    public function postCadastroAdmin(Request $request){
+
+    }
+
+    public function editAdmin($idEvento){
+        $evento = Evento::with('programacao')->with('planos')->with('palestrantes')->with('destaque')->with('banner')->find($idEvento);
+        return view("events.cadastro", compact('evento'));
+    }
+
+    public function postEditAdmin($idEvento, Request $request){
+
+    }
+
+    public function active($idEvento){
+        $evento = Evento::find($idEvento);
+        $evento->status = 1;
+        $evento->save();
+        return redirect('admin/lista');
+    }
+
+    public function inactive($idEvento){
+        $evento = Evento::find($idEvento);
+        $evento->status = 3;
+        $evento->save();
+        return redirect('admin/lista');
+    }
+
+    public function delete($idEvento){
+        $evento = Evento::find($idEvento);
+        $evento->delete();
+        return redirect('admin/lista');
+    }
+
     public function evento($slug, Request $request){
         $evento = Evento::with('programacao')->with('planos')->with('palestrantes')->with('destaque')->with('banner')->where('slug', $slug)->first();
         if(empty($evento)){
