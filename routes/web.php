@@ -26,10 +26,19 @@ Route::get('/pagseguro/redirect', [
     'as' => 'pagseguro.redirect',
 ]);
 
-Route::get('/admin/lista', 'EventoController@listaAdmin');
-Route::get('/admin/cadastro', 'EventoController@cadastroAdmin');
-Route::post('/admin/cadastro', 'EventoController@postCadastroAdmin');
-Route::get('/admin/edit/{idEvento}', 'EventoController@editAdmin');
-Route::get('/admin/active/{idEvento}', 'EventoController@active');
-Route::get('/admin/inactive/{idEvento}', 'EventoController@inactive');
-Route::get('/admin/delete/{idEvento}', 'EventoController@delete');
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/lista', 'EventoController@listaAdmin');
+    Route::get('/cadastro', 'EventoController@cadastroAdmin');
+    Route::post('/cadastro', 'EventoController@postCadastroAdmin');
+    Route::get('/edit/{idEvento}', 'EventoController@editAdmin');
+    Route::post('/edit/{idEvento}', 'EventoController@postEditAdmin');
+    Route::get('/active/{idEvento}', 'EventoController@active');
+    Route::get('/inactive/{idEvento}', 'EventoController@inactive');
+    Route::get('/delete/{idEvento}', 'EventoController@delete');
+    Route::post('/detalhe-curso/{idEvento}', 'EventoController@postDetalheCurso');
+    Route::post('/palestrante-curso/{idEvento}', 'EventoController@postPalestranteCurso');
+    Route::get('/edit-detalhe/{idProgramacao}', 'EventoController@getEditProgramacao');
+    Route::post('/edit-programacao/{idProgramacao}', 'EventoController@postEditProgramacao');
+    Route::post('/plano-curso/{idEvento}', 'EventoController@postPlanoCurso');
+
+});

@@ -90,7 +90,7 @@
 
 
 							<div id="top-page-logo" class="td">
-								<h2 class="blog-title"><a href="http://www.reunecursos.com.br/novosite" title="Reune Cursos"><img width="351" height="76" alt="Reune Cursos" src="http://www.reunecursos.com.br/novosite/wp-content/uploads/2016/09/reune-cursos-logotipo-1.png" data-retina=""/></a></h2>
+								<h2 class="blog-title"><a href="http://cursos.reunecursos.com.br" title="Reune Cursos"><img width="351" height="76" alt="Reune Cursos" src="http://www.reunecursos.com.br/novosite/wp-content/uploads/2016/09/reune-cursos-logotipo-1.png" data-retina=""/></a></h2>
 							</div>
 							<div class="td">
 								<div class="header-ads">

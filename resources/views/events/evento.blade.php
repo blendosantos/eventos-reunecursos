@@ -95,7 +95,7 @@
                                 <?php $dtInical = strtotime($evento->dt_inicial); ?>
                                 <?php
                                 function convert_date($m){
-                                    $meses = array("Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro");
+                                    $meses = array("","Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro");
                                     return $meses[$m];
                                 };
                                 ?>
