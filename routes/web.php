@@ -28,6 +28,7 @@ Route::get('/pagseguro/redirect', [
 
 Route::get('/admin/lista', 'EventoController@listaAdmin');
 Route::get('/admin/cadastro', 'EventoController@cadastroAdmin');
+Route::post('/admin/cadastro', 'EventoController@postCadastroAdmin');
 Route::get('/admin/edit/{idEvento}', 'EventoController@editAdmin');
 Route::get('/admin/active/{idEvento}', 'EventoController@active');
 Route::get('/admin/inactive/{idEvento}', 'EventoController@inactive');

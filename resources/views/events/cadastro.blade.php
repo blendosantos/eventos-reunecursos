@@ -57,7 +57,8 @@
                         <h2>Cadastro de Cursos</h2>
 					</div>
                     <div class="col-md-12" style="margin-top: 20px">
-                        <form action="{{ isset($evento) ? url('/admin/edit/' . $evento->id) : url('/admin/cadastro') }}" method="POST">
+                        <form enctype='multipart/form-data' action="{{ isset($evento) ? url('/admin/edit/' . $evento->id) : url('/admin/cadastro') }}" method="POST">
+                            @csrf
                             <div class="form-group">
                                 <label for="titulo">Título</label>
                                 <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título" required value="{{ isset($evento) ? $evento->titulo : '' }}">
@@ -69,6 +70,10 @@
                             <div class="form-group">
                                 <label for="local">Local</label>
                                 <input type="text" class="form-control" id="local" placeholder="Local" name="local" required value="{{ isset($evento) ? $evento->local : '' }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="descricao">Sobre o curso</label>
+                                <textarea class="form-control" id="descricao" placeholder="Descrição" name="descricao" required>{{ isset($evento) ? $evento->descricao : '' }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="endereco">Endereço</label>
@@ -112,11 +117,171 @@
                                 <label for="publico_alvo">Público Alvo</label>
                                 <input type="text" class="form-control" id="publico_alvo" placeholder="Público Alvo" name="publico_alvo" value="{{ isset($evento) ? $evento->publico_alvo : '' }}">
                             </div>
+                            <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="imagem_destaque">Imagem de destaque</label>
+                                <input type="file" id="imagem_destaque" name="imagem_destaque" required>
+                            </div>
+                            </div>
+                            <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="banner">Banner de Fundo Topo</label>
+                                <input type="file" id="banner" name="banner">
+                            </div>
+                            </div>
                             <div class="col-md-12">
                                 <input type="submit" class="btn btn-primary" value="{{ isset($evento) ? 'Editar' : 'Cadastrar' }}"/>
                             </div>
                         </form>
+                    </div>
+
+                    <div style="margin-top: 20px;border-bottom: 2px solid #000;">&nbsp;</div>
+
+                    @if(isset($evento))
+                    <div class="col-md-12" style="margin-top: 20px">
+                        <form enctype='multipart/form-data' action="{{ url('/admin/detalhe-curso/' . $evento->id) }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label for="titulo">Título</label>
+                                <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="sub_titulo">Sub Título</label>
+                                <input type="text" class="form-control" id="sub_titulo" name="sub_titulo" placeholder="Título" required>
+                            </div>
+                            <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="hora">Hora</label>
+                                <input type="text" class="form-control" id="hora" placeholder="Hora" name="hora" required>
+                            </div>
+                            </div>
+                            <div class="col-md-2">&nbsp;</div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="banner">Imagem de destaque</label>
+                                    <input type="file" id="banner" name="banner">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="submit" class="btn btn-primary" value="Cadastrar"/>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-md-12" style="margin-top: 20px">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Título</th>
+                                    <th scope="col">Sub Título</th>
+                                    <th scope="col">Hora</th>
+                                    <th scope="col" width="100">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($evento->programacao as $e)
+                                    <tr>
+                                        <th scope="row">{{ $e->id }}</th>
+                                        <td>{{ $e->titulo }}</td>
+                                        <td>{{ $e->sub_titulo }}</td>
+                                        <td>{{ $e->hora }}</td>
+                                        <td>
+                                            <a href="{{ url('admin/edit-detalhe/' . $e->id) }}"><i class="fa fa-edit" title="Editar" style="color: #0008ff;"></i></a>
+                                            <a href="{{ url('admin/delete-detalhe/' . $e->id) }}"><i class="fa fa-trash" title="Excluir" style="color: #d60404;"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            </table>
 					</div>
+                    @endif
+
+                    <div style="margin-top: 20px;border-bottom: 2px solid #000;">&nbsp;</div>
+
+                    @if(isset($evento))
+                    <div class="col-md-12" style="margin-top: 20px">
+                        <form enctype='multipart/form-data' action="{{ url('/admin/palestrantes-curso/' . $evento->id) }}" method="POST">
+                            @csrf
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="nome">Nome</label>
+                                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">E-mail</label>
+                                    <input type="text" class="form-control" id="email" name="email" placeholder="E-mail" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="especificacao">Especificações</label>
+                                <input type="text" class="form-control" id="especificacao" name="especificacao" placeholder="Especificações" required>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="facebook">Facebook</label>
+                                    <input type="text" class="form-control" id="facebook" name="facebook" placeholder="Facebook" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="linkedin">Linkedin</label>
+                                    <input type="text" class="form-control" id="linkedin" name="linkedin" placeholder="Linkedin" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="twitter">Twitter</label>
+                                    <input type="text" class="form-control" id="twitter" name="twitter" placeholder="Twitter" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="instagram">Instagram</label>
+                                    <input type="text" class="form-control" id="instagram" name="instagram" placeholder="Instagram" required>
+                                </div>
+                            </div>
+                            <div class="col-md-1">&nbsp;</div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="foto">Foto</label>
+                                    <input type="file" id="foto" name="foto">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="submit" class="btn btn-primary" value="Cadastrar"/>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-md-12" style="margin-top: 20px">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col" width="100">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($evento->palestrantes as $e)
+                                    <tr>
+                                        <th scope="row">{{ $e->palestrante->id }}</th>
+                                        <td>{{ $e->palestrante->nome }}</td>
+                                        <td>{{ $e->palestrante->email }}</td>
+                                        <td>
+                                            <a href="{{ url('admin/edit-palestrante/' . $e->id) }}"><i class="fa fa-edit" title="Editar" style="color: #0008ff;"></i></a>
+                                            <a href="{{ url('admin/delete-palestrante/' . $e->id) }}"><i class="fa fa-trash" title="Excluir" style="color: #d60404;"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            </table>
+					</div>
+                    @endif
 				</div>
 			</div>
 		</section>
