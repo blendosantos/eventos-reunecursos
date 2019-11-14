@@ -66,7 +66,12 @@ class EventoController extends Controller
         $evento->carga_horaria = $request->carga_horaria;
         $evento->publico_alvo = $request->publico_alvo;
         $evento->idImagemDestaque = $midia->id;
-        $evento->slug = $slug;
+
+        $slug = $this->slugify($request->titulo);
+        $eventoSlug = Evento::where('slug', $slug)->get();
+        if($eventoSlug) {
+            $evento->slug = $slug.'-'.rand(111, 999);
+        }
 
         $fileBanner = $request->file('banner');
         if ($fileBanner) {
@@ -127,8 +132,7 @@ class EventoController extends Controller
             $slug = $this->slugify($request->titulo);
             $eventoSlug = Evento::where('slug', $slug)->get();
             if($eventoSlug) {
-                $slug . rand(111, 999);
-                $evento->slug = $this->slugify($request->titulo);
+                $evento->slug = $slug.'-'.rand(111, 999);
             }
 
             $fileBanner = $request->file('banner');

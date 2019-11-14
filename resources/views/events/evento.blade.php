@@ -140,7 +140,7 @@
 								<div class="col-md-6">
 									<div class="mu-about-right">
 										<h2>Sobre o curso</h2>
-                                        <p>{{$evento->descricao}}</p>
+                                        <p style="text-align: justify;">{{$evento->descricao}}</p>
 									</div>
 								</div>
 							</div>
@@ -166,13 +166,13 @@
                             <div class="div-metodologia">
                                 <ul class="ul-metodologia">
                                     <li>
-                                        <p>Método de aprendizagem  dinâmico e interativos.</p>
+                                        <p>Método de aprendizagem  dinâmico e interativos;</p>
                                     </li>
                                     <li>
-                                            <p>Turmas reduzidas, possibilitando  o contado direto entre o facilitador e os participantes.</p>
+                                            <p>Turmas reduzidas, possibilitando  o contado direto entre o facilitador e os participantes;</p>
                                     </li>
                                     <li>
-                                            <p> Utilização de recursos de áudio e vídeo de ultima geração.</p>
+                                            <p> Utilização de recursos de áudio e vídeo de ultima geração;</p>
                                     </li>
                                     <li>
                                             <p> Coach personalizado, fomentando a construção do conhecimento em todas as etapas do processo.</p>
@@ -310,7 +310,7 @@
 										<img src="{{$item->palestrante->foto != '' ? $item->palestrante->foto->path : '/assets/images/speaker-1.jpg'}}" alt="speaker img">
 										<div class="mu-single-speakers-info">
 											<h3>{{$item->palestrante->nome}}</h3>
-											<p>{{$item->palestrante->especificacao}}</p>
+											<p style="text-align: justify;">{{$item->palestrante->especificacao}}</p>
 											<ul class="mu-single-speakers-social">
 												<li><a href="{{$item->palestrante->facebook}}"><i class="fa fa-facebook"></i></a></li>
 												<li><a href="{{$item->palestrante->twitter}}"><i class="fa fa-twitter"></i></a></li>
@@ -366,8 +366,7 @@
 
 							<div class="mu-title-area">
 								<h2 class="mu-title">Valor do Investimento</h2>
-								<p>O investimento para participação no curso poderá ser dividido em até 4x sem juros
-                                    e o pagamento é assegurado pelo PagSeguro no qual fornece várias formas de efetuar o pagamento além do cartão de crédito.</p>
+								<p>O pagamento poderá ser realizado a vista (Boleto Bancário/Cartão em parcela única) ou em até 18 vezes c/ juros do PagSeguro.</p>
 							</div>
 
 							<div class="mu-pricing-conten">
@@ -384,7 +383,7 @@
                                                     <span class="mu-rate">{{$evento->planos[0]->valor}}</span>
                                                     <span class="mu-time">{{$evento->planos[0]->tempo}}</span>
                                                 </div>
-                                                <h3 class="mu-price-title">{{$evento->planos[0]->titulo}}</h3>
+                                                <h3 class="mu-price-title">{{  $evento->planos[0]->titulo }}</h3>
                                                 <ul>
                                                     <li>{{$evento->planos[0]->item1}}</li>
                                                     <li>{{$evento->planos[0]->item2}}</li>

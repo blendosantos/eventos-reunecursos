@@ -423,7 +423,6 @@ button:focus {
 	margin-bottom: 15px;
 	padding: 0;
 	z-index: 10;
-	text-transform: capitalize;
 }
 
 .mu-about-left {

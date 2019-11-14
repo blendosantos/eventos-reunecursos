@@ -3,7 +3,7 @@
     <div class="col-md-6">
         <div class="form-group">
             <label for="titulo">Título</label>
-            <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título" required value="{{ isset($plano) ? $plano->titulo : '' }}">
+            <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título" value="{{ isset($plano) ? $plano->titulo : '' }}">
         </div>
     </div>
     <div class="col-md-6">
