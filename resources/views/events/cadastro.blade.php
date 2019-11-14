@@ -136,60 +136,25 @@
     <div class="col-md-12" style="margin-top: 20px">
         <h2>Cadastro dos Palestrantes</h2>
     </div>
-    <div class="col-md-12" style="margin-top: 20px">
-        <form enctype='multipart/form-data' action="{{ url('/admin/palestrante-curso/' . $evento->id) }}" method="POST">
+    <div class="col-md-8" style="margin-top: 20px">
+        <form enctype='multipart/form-data' action="{{ url('/admin/palestrante-vincular-curso/' . $evento->id) }}" method="POST">
             @csrf
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="nome">Nome</label>
-                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="text" class="form-control" id="email" name="email" placeholder="E-mail" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="especificacao">Especificações</label>
-                <input type="text" class="form-control" id="especificacao" name="especificacao" placeholder="Especificações" required>
-            </div>
             <div class="col-md-4">
-                <div class="form-group">
-                    <label for="facebook">Facebook</label>
-                    <input type="text" class="form-control" id="facebook" name="facebook" placeholder="Facebook" required>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="linkedin">Linkedin</label>
-                    <input type="text" class="form-control" id="linkedin" name="linkedin" placeholder="Linkedin" required>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="twitter">Twitter</label>
-                    <input type="text" class="form-control" id="twitter" name="twitter" placeholder="Twitter" required>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="instagram">Instagram</label>
-                    <input type="text" class="form-control" id="instagram" name="instagram" placeholder="Instagram" required>
-                </div>
+                <select name="idPalestrante" class="form-control">
+                    <option value="">::SELECIONE::</option>
+                    @foreach($listaPalestrantes as $p)
+                        <option value="{{  $p->id }}">{{$p->nome}}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="foto">Foto</label>
-                    <input type="file" id="foto" name="foto">
-                </div>
-            </div>
-            <div class="col-md-12">
-                <input type="submit" class="btn btn-primary" value="Cadastrar"/>
+            <div class="col-md-4">
+                <input type="submit" class="btn btn-primary" value="Adicionar"/>
             </div>
         </form>
+    </div>
+    <div class="col-md-4" style="text-align: right;">
+        <a href="{{ url('admin/cad-palestrante/' . $evento->id) }}" class="btn btn-primary btn-lg">Novo Palestrante</a>
     </div>
 
     <div class="col-md-12" style="margin-top: 20px">
@@ -209,7 +174,7 @@
                         <td>{{ $e->palestrante->nome }}</td>
                         <td>{{ $e->palestrante->email }}</td>
                         <td>
-                            <a href="{{ url('admin/edit-palestrante/' . $e->id) }}"><i class="fa fa-edit" title="Editar" style="color: #0008ff;"></i></a>
+                            <a href="{{ url('admin/edit-palestrante/' . $e->palestrante->id . '/' . $evento->id) }}"><i class="fa fa-edit" title="Editar" style="color: #0008ff;"></i></a>
                             <a href="{{ url('admin/delete-palestrante/' . $e->id) }}"><i class="fa fa-trash" title="Excluir" style="color: #d60404;"></i></a>
                         </td>
                     </tr>
@@ -226,40 +191,7 @@
         <h2>Cadastro de Planos</h2>
     </div>
     <div class="col-md-12" style="margin-top: 20px">
-        <form enctype='multipart/form-data' action="{{ url('/admin/plano-curso/' . $evento->id) }}" method="POST">
-            @csrf
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="titulo">Título</label>
-                    <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título" required>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="valor">Valor</label>
-                    <input type="number" class="form-control" id="valor" name="valor" placeholder="Valor" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="item1">Descrição 1</label>
-                <input type="text" class="form-control" id="item1" name="item1" placeholder="Descrição 1">
-            </div>
-            <div class="form-group">
-                <label for="item1">Descrição 1</label>
-                <input type="text" class="form-control" id="item1" name="item1" placeholder="Descrição 1">
-            </div>
-            <div class="form-group">
-                <label for="item1">Descrição 1</label>
-                <input type="text" class="form-control" id="item1" name="item1" placeholder="Descrição 1">
-            </div>
-            <div class="form-group">
-                <label for="tempo">Tempo de curso</label>
-                <input type="text" class="form-control" id="tempo" name="tempo" placeholder="Tempo de curso">
-            </div>
-            <div class="col-md-12">
-                <input type="submit" class="btn btn-primary" value="Cadastrar"/>
-            </div>
-        </form>
+        @include('events.forms.formPlano')
     </div>
 
     <div class="col-md-12" style="margin-top: 20px">
@@ -269,7 +201,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Titulo</th>
                     <th scope="col">Valor</th>
-                    <!--<th scope="col" width="100">Ações</th>-->
+                    <th scope="col" width="100">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -278,10 +210,10 @@
                         <th scope="row">{{ $e->id }}</th>
                         <td>{{ $e->titulo }}</td>
                         <td>{{ $e->valor }}</td>
-                        <!--<td>
-                            <a href="{{ url('admin/edit-palestrante/' . $e->id) }}"><i class="fa fa-edit" title="Editar" style="color: #0008ff;"></i></a>
-                            <a href="{{ url('admin/delete-palestrante/' . $e->id) }}"><i class="fa fa-trash" title="Excluir" style="color: #d60404;"></i></a>
-                        </td>-->
+                        <td>
+                            <a href="{{ url('admin/edit-plano/' . $e->id) }}"><i class="fa fa-edit" title="Editar" style="color: #0008ff;"></i></a>
+                            <a href="{{ url('admin/delete-plano/' . $e->id) }}"><i class="fa fa-trash" title="Excluir" style="color: #d60404;"></i></a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

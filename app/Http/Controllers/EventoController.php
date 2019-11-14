@@ -35,9 +35,15 @@ class EventoController extends Controller
 
     public function postCadastroAdmin(Request $request)
     {
+        $slug = $this->slugify($request->titulo);
+        $eventoSlug = Evento::where('slug', $slug)->get();
+        if($eventoSlug) {
+            $slug . rand(111, 999);
+        }
+
         $file = $request->file('imagem_destaque');
         $extension = $file->getClientOriginalExtension();
-        $file = rand(11111, 99999) . '.' . $extension;
+        $filename = rand(11111, 99999) . '.' . $extension;
         $file->storeAs('uploads', $filename);
         $midia = new Midia();
         $midia->path = 'storage/uploads/' . $filename;
@@ -60,15 +66,15 @@ class EventoController extends Controller
         $evento->carga_horaria = $request->carga_horaria;
         $evento->publico_alvo = $request->publico_alvo;
         $evento->idImagemDestaque = $midia->id;
-        $evento->slug = $this->slugify($request->titulo);
+        $evento->slug = $slug;
 
         $fileBanner = $request->file('banner');
         if ($fileBanner) {
             $extension = $fileBanner->getClientOriginalExtension();
             $filename = rand(11111, 99999) . '.' . $extension;
             $fileBanner->storeAs('uploads', $filename);
-            $midia = new Midia();
-            $midia->path = 'storage/uploads/' . $filename;
+            $midiaBanner = new Midia();
+            $midiaBanner->path = 'storage/uploads/' . $filename;
             $midiaBanner->descricao = "Banner Curso";
             $midiaBanner->nm_original = $fileBanner->getClientOriginalName();
             $midiaBanner->extensao = $extension;
@@ -81,8 +87,9 @@ class EventoController extends Controller
 
     public function editAdmin($idEvento)
     {
+        $listaPalestrantes = Palestrante::all();
         $evento = Evento::with('programacao')->with('planos')->with('palestrantes')->with('destaque')->with('banner')->find($idEvento);
-        return view("events.cadastro", compact('evento'));
+        return view("events.cadastro", compact('evento', 'listaPalestrantes'));
     }
 
     public function postEditAdmin($idEvento, Request $request)
@@ -117,15 +124,20 @@ class EventoController extends Controller
                 $evento->idImagemDestaque = $midia->id;
             }
 
-            $evento->slug = $this->slugify($request->titulo);
+            $slug = $this->slugify($request->titulo);
+            $eventoSlug = Evento::where('slug', $slug)->get();
+            if($eventoSlug) {
+                $slug . rand(111, 999);
+                $evento->slug = $this->slugify($request->titulo);
+            }
 
             $fileBanner = $request->file('banner');
             if ($fileBanner) {
                 $extension = $fileBanner->getClientOriginalExtension();
                 $filename = rand(11111, 99999) . '.' . $extension;
                 $fileBanner->storeAs('uploads', $filename);
-                $midia = new Midia();
-                $midia->path = 'storage/uploads/' . $filename;
+                $midiaBanner = new Midia();
+                $midiaBanner->path = 'storage/uploads/' . $filename;
                 $midiaBanner->descricao = "Banner Curso";
                 $midiaBanner->nm_original = $fileBanner->getClientOriginalName();
                 $midiaBanner->extensao = $extension;
@@ -149,6 +161,30 @@ class EventoController extends Controller
         $plano->item3 = $request->item3;
         $plano->tempo = $request->tempo;
         $plano->save();
+        return redirect('admin/edit/' . $idEvento);
+    }
+
+    public function editPlanoCurso($id) {
+        $plano = PlanoEvento::find($id);
+        return view('events.editPlano', compact('plano'));
+    }
+
+    public function postEditPlanoCurso($id, Request $request) {
+        $plano = PlanoEvento::find($id);
+        $plano->titulo = $request->titulo;
+        $plano->valor = $request->valor;
+        $plano->item1 = $request->item1;
+        $plano->item2 = $request->item2;
+        $plano->item3 = $request->item3;
+        $plano->tempo = $request->tempo;
+        $plano->save();
+        return redirect('admin/edit/' . $plano->idEvento);
+    }
+
+    public function deletePlanoCurso($id) {
+        $plano = PlanoEvento::find($id);
+        $idEvento = $plano->idEvento;
+        $plano->delete();
         return redirect('admin/edit/' . $idEvento);
     }
 
@@ -191,8 +227,8 @@ class EventoController extends Controller
                 $extension = $fileBanner->getClientOriginalExtension();
                 $filename = rand(11111, 99999) . '.' . $extension;
                 $fileBanner->storeAs('uploads', $filename);
-                $midia = new Midia();
-                $midia->path = 'storage/uploads/' . $filename;
+                $midiaBanner = new Midia();
+                $midiaBanner->path = 'storage/uploads/' . $filename;
                 $midiaBanner->descricao = "Banner Programação";
                 $midiaBanner->nm_original = $fileBanner->getClientOriginalName();
                 $midiaBanner->extensao = $extension;
@@ -230,17 +266,21 @@ class EventoController extends Controller
                 $extension = $fileBanner->getClientOriginalExtension();
                 $filename = rand(11111, 99999) . '.' . $extension;
                 $fileBanner->storeAs('uploads', $filename);
-                $midia = new Midia();
-                $midia->path = 'storage/uploads/' . $filename;
+                $midiaBanner = new Midia();
+                $midiaBanner->path = 'storage/uploads/' . $filename;
                 $midiaBanner->descricao = "Banner Programação";
                 $midiaBanner->nm_original = $fileBanner->getClientOriginalName();
                 $midiaBanner->extensao = $extension;
                 $midiaBanner->save();
-                $detalhe->idBanner = $midiaBanner->id;
+                $programacao->idBanner = $midiaBanner->id;
             }
             $programacao->save();
             return redirect('admin/edit/' . $programacao->idEvento);
         }
+    }
+
+    public function getPalestranteCurso($idEvento, Request $request) {
+        return view('events.forms.formPalestrante', compact('idEvento'));
     }
 
     public function postPalestranteCurso($idEvento, Request $request)
@@ -262,8 +302,8 @@ class EventoController extends Controller
                 $extension = $fileBanner->getClientOriginalExtension();
                 $filename = rand(11111, 99999) . '.' . $extension;
                 $fileBanner->storeAs('uploads', $filename);
-                $midia = new Midia();
-                $midia->path = 'storage/uploads/' . $filename;
+                $midiaBanner = new Midia();
+                $midiaBanner->path = 'storage/uploads/' . $filename;
                 $midiaBanner->descricao = "Foto Palestrante";
                 $midiaBanner->nm_original = $fileBanner->getClientOriginalName();
                 $midiaBanner->extensao = $extension;
@@ -278,6 +318,61 @@ class EventoController extends Controller
                 $cursoPalestrante->save();
             }
         }
+        return redirect('admin/edit/' . $idEvento);
+    }
+
+    public function postEditPalestrante($idPalestrante, $idEvento, Request $request)
+    {
+        $palestrante = Palestrante::find($idPalestrante);
+        $palestrante->nome = $request->nome;
+        $palestrante->email = $request->email;
+        $palestrante->especificacao = $request->especificacao;
+        $palestrante->facebook = $request->facebook;
+        $palestrante->linkedin = $request->linkedin;
+        $palestrante->twitter = $request->twitter;
+        $palestrante->instagram = $request->instagram;
+
+        $fileBanner = $request->file('foto');
+        if ($fileBanner) {
+            $extension = $fileBanner->getClientOriginalExtension();
+            $filename = rand(11111, 99999) . '.' . $extension;
+            $fileBanner->storeAs('uploads', $filename);
+            $midiaBanner = new Midia();
+            $midiaBanner->path = 'storage/uploads/' . $filename;
+            $midiaBanner->descricao = "Foto Palestrante";
+            $midiaBanner->nm_original = $fileBanner->getClientOriginalName();
+            $midiaBanner->extensao = $extension;
+            $midiaBanner->save();
+            $palestrante->idFoto = $midiaBanner->id;
+        }
+        $palestrante->save();
+        return redirect('admin/edit/' . $idEvento);
+    }
+
+    public function editPalestrante($idPalestrante, $idEvento, Request $request)
+    {
+        $palestrante = Palestrante::find($idPalestrante);
+        return view('events.forms.formPalestrante', compact('palestrante', 'idEvento'));
+    }
+
+    public function postPalestranteVincularCurso($idEvento, Request $request)
+    {
+        $evento = Evento::find($idEvento);
+
+        if ($evento) {
+            $cursoPalestrante = new EventoPalestrante();
+            $cursoPalestrante->idEvento = $evento->id;
+            $cursoPalestrante->idPalestrante = $request->idPalestrante;
+            $cursoPalestrante->save();
+        }
+        return redirect('admin/edit/' . $idEvento);
+    }
+
+    public function deletePalestranteCurso($id, Request $request)
+    {
+        $palestrante = EventoPalestrante::find($id);
+        $idEvento = $palestrante->idEvento;
+        $palestrante->delete();
         return redirect('admin/edit/' . $idEvento);
     }
 

@@ -36,9 +36,18 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/inactive/{idEvento}', 'EventoController@inactive');
     Route::get('/delete/{idEvento}', 'EventoController@delete');
     Route::post('/detalhe-curso/{idEvento}', 'EventoController@postDetalheCurso');
+    Route::get('/cad-palestrante/{idEvento}', 'EventoController@getPalestranteCurso');
     Route::post('/palestrante-curso/{idEvento}', 'EventoController@postPalestranteCurso');
     Route::get('/edit-detalhe/{idProgramacao}', 'EventoController@getEditProgramacao');
     Route::post('/edit-programacao/{idProgramacao}', 'EventoController@postEditProgramacao');
+    Route::post('/palestrante-vincular-curso/{idEvento}', 'EventoController@postPalestranteVincularCurso');
+    Route::get('/delete-palestrante/{id}', 'EventoController@deletePalestranteCurso');
+    Route::get('/edit-palestrante/{idPalestrante}/{idEvento}', 'EventoController@editPalestrante');
+    Route::post('/edit-palestrante/{idPalestrante}/{idEvento}', 'EventoController@postEditPalestrante');
+
     Route::post('/plano-curso/{idEvento}', 'EventoController@postPlanoCurso');
+    Route::get('/edit-plano/{id}', 'EventoController@editPlanoCurso');
+    Route::post('/edit-plano/{id}', 'EventoController@postEditPlanoCurso');
+    Route::get('/delete-plano/{id}', 'EventoController@deletePlanoCurso');
 
 });
