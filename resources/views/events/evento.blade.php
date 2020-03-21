@@ -30,7 +30,7 @@
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!-- WARNING: Respond.js doesnt work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -434,7 +434,6 @@
 		</section>
 		<!-- End Pricing -->
 
-        @if($evento->status == 1)
 		<!-- Start Register  -->
 		<section id="mu-register">
 			<div class="container">
@@ -525,19 +524,20 @@
 												<input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone" required="">
 											</div>
 										</div>
+                                        @if($evento->status == 1)
 										<div class="col-md-6">
-
-										<div class="form-group">
-											<select class="form-control" name="plano" id="plano">
-                                                @foreach($evento->planos as $item)
-                                                    <option value="{{$item->id}}">{{$item->titulo . " (R$ " . $item->valor. ")"}}</option>
-                                                @endforeach
-											</select>
+                                            <div class="form-group">
+                                                <select class="form-control" name="plano" id="plano">
+                                                    @foreach($evento->planos as $item)
+                                                        <option value="{{$item->id}}">{{$item->titulo . " (R$ " . $item->valor. ")"}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
 										</div>
-										</div>
+                                        @endif
 									</div>
 
-									<button type="submit" class="mu-reg-submit-btn">INSCREVER-SE</button>
+									<button type="submit" class="mu-reg-submit-btn">{{$evento->preCadastro == 'S' ? 'PRÉ-INSCRIÇÃO' : 'COMPRAR'}}</button>
 
 					            </form>
 							</div>
@@ -547,7 +547,6 @@
 				</div>
 			</div>
         </section>
-        @endif
 		<!-- End Register -->
 
 		<!-- Start FAQ -->

@@ -45,6 +45,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/edit-palestrante/{idPalestrante}/{idEvento}', 'EventoController@editPalestrante');
     Route::post('/edit-palestrante/{idPalestrante}/{idEvento}', 'EventoController@postEditPalestrante');
 
+    Route::get('/listaPreInscritos/{idEvento}', 'EventoController@listaPreInscricao');
+
     Route::post('/plano-curso/{idEvento}', 'EventoController@postPlanoCurso');
     Route::get('/edit-plano/{id}', 'EventoController@editPlanoCurso');
     Route::post('/edit-plano/{id}', 'EventoController@postEditPlanoCurso');

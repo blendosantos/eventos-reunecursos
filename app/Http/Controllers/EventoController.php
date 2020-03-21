@@ -66,6 +66,7 @@ class EventoController extends Controller
         $evento->carga_horaria = $request->carga_horaria;
         $evento->publico_alvo = $request->publico_alvo;
         $evento->idImagemDestaque = $midia->id;
+        $evento->preCadastro = $request->preCadastro;
 
         $slug = $this->slugify($request->titulo);
         $eventoSlug = Evento::where('slug', $slug)->get();
@@ -114,6 +115,7 @@ class EventoController extends Controller
             $evento->dt_final = $request->dt_final;
             $evento->carga_horaria = $request->carga_horaria;
             $evento->publico_alvo = $request->publico_alvo;
+            $evento->preCadastro = $request->preCadastro;
 
             $file = $request->file('imagem_destaque');
             if ($file) {
@@ -412,19 +414,22 @@ class EventoController extends Controller
             return redirect("/")->with('error', 'Evento não encontrado.');
         }
         try {
-            $plano = PlanoEvento::find($request->plano);
-            if ($plano->idEvento != $evento->id) {
-                return redirect("/$evento->slug")->with('error', 'Plano informado não existe.');
-            }
-
-            $validaParticipante = Participante::where('email', $request->email)->where('idEvento', $evento->idEvento)->where('idPlano', $request->plano)->first();
-            if ($validaParticipante) {
-                return redirect("/pagseguro/pagar/$validaParticipante->id");
-            }
-
             $participante = new Participante();
+            if($evento->preCadastro == 'N') {
+                $plano = PlanoEvento::find($request->plano);
+                if ($plano->idEvento != $evento->id) {
+                    return redirect("/$evento->slug")->with('error', 'Plano informado não existe.');
+                }
+
+                $validaParticipante = Participante::where('email', $request->email)->where('idEvento', $evento->idEvento)->where('idPlano', $request->plano)->first();
+                if ($validaParticipante) {
+                    return redirect("/pagseguro/pagar/$validaParticipante->id");
+                }
+
+                $participante->idPlano = $request->plano;
+            }
+            $participante->preInscricao = $evento->preCadastro;
             $participante->idEvento = $evento->id;
-            $participante->idPlano = $request->plano;
             $participante->nome = $request->nome;
             $participante->email = $request->email;
             $participante->cpf = str_replace(".", "", str_replace("-", "", $request->cpf));
@@ -435,10 +440,19 @@ class EventoController extends Controller
             $participante->profissao_atuacao = $request->profissao_atuacao;
             $participante->save();
 
-            return redirect("/pagseguro/pagar/$participante->id");
+            if($evento->preCadastro == 'N') {
+                return redirect("/pagseguro/pagar/$participante->id");
+            }
+            return redirect("/$evento->slug")->with('sucesso-inscricao', 'Pré-inscrição efetuada com sucesso!');
         } catch (PDOException $th) {
             return redirect("/$evento->slug")->with('error', 'Dados informados inválido. Preencha o formulário corretamente.');
         }
+    }
+
+    public function listaPreInscricao($idEvento, Request $request)
+    {
+        $inscritos = Participante::where('idEvento', $idEvento)->where('preInscricao', 'S')->get();
+        return view('events.listaPreInscricao', compact('inscritos'));
     }
 
     private function slugify($text)

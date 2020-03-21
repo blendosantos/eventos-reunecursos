@@ -45,39 +45,33 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12" style="margin-top: 20px">
-                        <h2>Lista de Cursos</h2>
+                        <h2>Lista de Pré-inscritos</h2>
 					</div>
-                    <div class="col-md-12" style="margin-top: 20px">
-                        <a href="{{ url('admin/cadastro') }}" class="btn btn-primary btn-lg">Novo</a>
-                    </div>
                     <div class="col-md-12" style="margin-top: 20px">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Título</th>
-                                    <th scope="col">Sub Título</th>
-                                    <th scope="col">Data Ínicio</th>
-                                    <th scope="col" width="100">Ações</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">CPF</th>
+                                    <th scope="col">E-mail</th>
+                                    <th scope="col">Empresa</th>
+                                    <th scope="col">CNPJ</th>
+                                    <th scope="col">Grau de Instrução</th>
+                                    <th scope="col">Profissão</th>
+                                    <th scope="col">Telefone</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($eventos as $e)
+                                @foreach($inscritos as $e)
                                     <tr>
-                                        <th scope="row">{{ $e->id }}</th>
-                                        <td>{{ $e->titulo }}</td>
-                                        <td>{{ $e->sub_titulo }}</td>
-                                        <td>{{ date_format(date_create($e->dt_inicial), "d/m/Y H:i:s") }}</td>
-                                        <td>
-                                            <a href="{{ url('admin/edit/' . $e->id) }}"><i class="fa fa-edit" title="Editar" style="color: #0008ff;"></i></a>
-                                            @if($e->status == 3)
-                                            <a href="{{ url('admin/active/' . $e->id) }}"><i class="fa fa-ban" title="Ativar" style="color: #d60404;"></i></a>
-                                            @elseif($e->status == 1)
-                                            <a href="{{ url('admin/inactive/' . $e->id) }}"><i class="fa fa-check" title="Encerrar" style="color: #058003;"></i></a>
-                                            @endif
-                                            <a href="{{ url('admin/listaPreInscritos/' . $e->id) }}"><i class="fa fa-eye" title="Visualizar Lista de Pré-inscritos" style="color: #0008ff;"></i></a>
-                                            <a href="{{ url('admin/delete/' . $e->id) }}"><i class="fa fa-trash" title="Excluir" style="color: #d60404;"></i></a>
-                                        </td>
+                                        <th>{{ $e->nome }}</th>
+                                        <td>{{ $e->cpf }}</td>
+                                        <td>{{ $e->email }}</td>
+                                        <td>{{ $e->nm_empresa }}</td>
+                                        <td>{{ $e->cnpj }}</td>
+                                        <td>{{ $e->grau_instrucao }}</td>
+                                        <td>{{ $e->profissao_atuacao }}</td>
+                                        <td>{{ $e->telefone }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

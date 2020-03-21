@@ -56,27 +56,43 @@
                 </div>
             </div>
             <div class="col-md-4">
-            <div class="form-group">
-                <label for="carga_horaria">Carga Horaria</label>
-                <input type="text" class="form-control" id="carga_horaria" placeholder="Carga Horaria" name="carga_horaria" {{ isset($evento) ? '' : 'required' }} value="{{ isset($evento) ? $evento->carga_horaria : '' }}">
+                <div class="form-group">
+                    <label for="carga_horaria">Carga Horaria</label>
+                    <input type="text" class="form-control" id="carga_horaria" placeholder="Carga Horaria" name="carga_horaria" {{ isset($evento) ? '' : 'required' }} value="{{ isset($evento) ? $evento->carga_horaria : '' }}">
+                </div>
             </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="publico_alvo">Público Alvo</label>
+                    <input type="text" class="form-control" id="publico_alvo" placeholder="Público Alvo" name="publico_alvo" value="{{ isset($evento) ? $evento->publico_alvo : '' }}">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="publico_alvo">Público Alvo</label>
-                <input type="text" class="form-control" id="publico_alvo" placeholder="Público Alvo" name="publico_alvo" value="{{ isset($evento) ? $evento->publico_alvo : '' }}">
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="imagem_destaque">Imagem de destaque</label>
+                    <input type="file" id="imagem_destaque" name="imagem_destaque" {{ isset($evento) ? '' : 'required' }}>
+                </div>
             </div>
-            <div class="col-md-6">
-            <div class="form-group">
-                <label for="imagem_destaque">Imagem de destaque</label>
-                <input type="file" id="imagem_destaque" name="imagem_destaque" {{ isset($evento) ? '' : 'required' }}>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="banner">Banner de Fundo Topo</label>
+                    <input type="file" id="banner" name="banner">
+                </div>
             </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="preCadastro">Pré-cadastro*</label>
+                    <select name="preCadastro" id="preCadastro" class="form-control" required>
+                        <option value="N" {{ isset($evento) && $evento->preCadastro = 'N' ? '' : 'selected' }}>Não</option>
+                        <option value="S"  {{ isset($evento) && $evento->preCadastro = 'S' ? '' : 'selected' }}>Sim</option>
+                    </select>
+                </div>
             </div>
-            <div class="col-md-6">
-            <div class="form-group">
-                <label for="banner">Banner de Fundo Topo</label>
-                <input type="file" id="banner" name="banner">
-            </div>
-            </div>
+
             <div class="col-md-12">
                 <input type="submit" class="btn btn-primary" value="{{ isset($evento) ? 'Editar' : 'Cadastrar' }}"/>
             </div>

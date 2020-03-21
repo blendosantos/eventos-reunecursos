@@ -160,7 +160,7 @@
                                                             <p>
                                                                 <a class="detail-course" href="/{{$evento->slug}}">DETALHES</a>
                                                                 @if($evento->status == 1)
-                                                                <a class="shop-course" href="/{{$evento->slug}}#mu-register">COMPRAR</a>
+                                                                <a class="shop-course" href="/{{$evento->slug}}#mu-register">{{$evento->preCadastro == 'S' ? 'PRÉ-INSCRIÇÃO' : 'COMPRAR'}}</a>
                                                                 @else
                                                                 <a class="shop-course shop-course-encerrado" href="#">ENCERRADO</a>
                                                                 @endif
